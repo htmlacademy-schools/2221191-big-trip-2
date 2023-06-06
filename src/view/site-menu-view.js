@@ -9,7 +9,7 @@ const createSiteMenuTemplate = () => (
 
 export default class SiteMenuView {
   getTemplate () {
-    return createSiteMenuTemplate;
+    return createSiteMenuTemplate();
   }
 
   getElement() {
