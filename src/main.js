@@ -1,3 +1,4 @@
+// hi:)
 import FiltersView from './view/filters-view.js';
 import TripEventsPresenter from './presenter/trip-events-presenter.js';
 import SiteMenuView from './view/site-menu-view.js';
