@@ -92,4 +92,4 @@ const generatePoint = () => {
 
 const getPoints = () => Array.from({length: POINTS_COUNT}).map(() => generatePoint()).sort();
 
-export {getPoints, getDestinations, getOffersByType };
+export {getPoints, getDestinations, getOffersByType, POINT_TYPES };

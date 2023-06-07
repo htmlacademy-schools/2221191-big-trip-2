@@ -4,8 +4,7 @@ import SortingView from '../view/sorting-view.js';
 import NoPointView from '../view/no-point-view.js';
 import PointPresenter from './point-presenter.js';
 import { updateItem } from '../utils/common.js';
-import { SortType } from '../const.js';
-import { sortPricePoint, sortDayPoint, sortTimePoint } from '../utils/point.js';
+import { SortType, sorting } from '../utils/sorting.js';
 
 export default class BoardPresenter {
 
@@ -18,7 +17,7 @@ export default class BoardPresenter {
   #pointListComponent = new PointsListView();
 
   #pointPresenter = new Map();
-  #currentSortType = null;
+  #currentSortType = SortType.DAY;
   #sourcedBoardPoints = [];
 
   constructor(tripContainer, pointsModel) {
@@ -52,18 +51,7 @@ export default class BoardPresenter {
   };
 
   #sortPoint = (sortType) => {
-    switch (sortType) {
-      case SortType.DAY:
-        this.#boardPoints.sort(sortDayPoint);
-        break;
-      case SortType.TIME:
-        this.#boardPoints.sort(sortTimePoint);
-        break;
-      case SortType.PRICE:
-        this.#boardPoints.sort(sortPricePoint);
-        break;
-    }
-
+    sorting[sortType](this.#boardPoints);
     this.#currentSortType = sortType;
   };
 
@@ -78,7 +66,7 @@ export default class BoardPresenter {
   };
 
   #renderSort = () => {
-    this.#boardPoints.sort(sortDayPoint);
+    sorting[SortType.DAY](this.#boardPoints);
     render(this.#sortComponent, this.#tripContainer, RenderPosition.AFTERBEGIN);
     this.#sortComponent.setSortTypeChangeHandler(this.#handleSortTypeChange);
   };
