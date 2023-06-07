@@ -1,8 +1,8 @@
 // hi:)
+import { render } from './framework/render.js';
 import FiltersView from './view/filters-view.js';
 import TripEventsPresenter from './presenter/trip-events-presenter.js';
 import SiteMenuView from './view/site-menu-view.js';
-import { render } from './render.js';
 import PointsModel from './model/point-model.js';
 import { getPoints, getDestinations, getOffersByType } from './mock/point.js';
 
