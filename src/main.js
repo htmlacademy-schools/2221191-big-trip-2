@@ -3,7 +3,7 @@ import { render } from './framework/render.js';
 import FiltersView from './view/filters-view.js';
 import BoardPresenter from './presenter/board-presenter.js';
 import SiteMenuView from './view/site-menu-view.js';
-import PointsModel from './model/point-model.js';
+import PointsModel from './model/points-model.js';
 import { getPoints, getDestinations, getOffersByType } from './mock/point.js';
 import { generateFilter } from './mock/filter.js';
 
