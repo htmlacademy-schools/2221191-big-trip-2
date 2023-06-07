@@ -1,5 +1,6 @@
-import { createElement } from '../render.js';
-import {humanizePointDueDate, duration, getDate, getTime } from '../utils.js';
+import AbstractView from '../framework/view/abstract-view.js';
+import {humanizePointDueDate, duration, getDate, getTime } from '../utils/point-date.js';
+
 const renderOffers = (allOffers, checkedOffers) => {
   let result = '';
   allOffers.forEach((offer) => {
@@ -52,13 +53,13 @@ const createPreviewPointTemplate = (point, destinations, offers) => {
   );
 };
 
-export default class PreviewPointView {
-  #element = null;
+export default class PreviewPointView extends AbstractView {
   #point = null;
   #destination = null;
   #offers = null;
 
   constructor(point, destination, offers) {
+    super();
     this.#point = point;
     this.#destination = destination;
     this.#offers = offers;
@@ -68,15 +69,13 @@ export default class PreviewPointView {
     return createPreviewPointTemplate(this.#point, this.#destination, this.#offers);
   }
 
-  get element() {
-    if (!this.#element){
-      this.#element = createElement(this.template);
-    }
+  setEditClickHandler = (callback) => {
+    this._callback.editClick = callback;
+    this.element.querySelector('.event__rollup-btn').addEventListener('click', this.#editClickHandler);
+  };
 
-    return this.#element;
-  }
-
-  removeElement() {
-    this.#element = null;
-  }
+  #editClickHandler = (evt) => {
+    evt.preventDefault();
+    this._callback.editClick();
+  };
 }

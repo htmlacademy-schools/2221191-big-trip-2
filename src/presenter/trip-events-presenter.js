@@ -1,9 +1,9 @@
+import { render, replace } from '../framework/render.js';
 import PointsView from '../view/trip-points-view.js';
 import PreviewPointView from '../view/preview-point-view.js';
 import EditingPointView from '../view/editing-point-view.js';
 import SortingView from '../view/sorting-view.js';
 import NoPointView from '../view/no-point-view.js';
-import { render } from '../render.js';
 
 export default class TripEventsPresenter {
   #pointsList = null;
@@ -37,42 +37,40 @@ export default class TripEventsPresenter {
   }
 
   #renderPoint = (point) => {
-    const pointComponent = new PreviewPointView(point, this.#destinations, this.#offers);
-    const pointEditComponent = new EditingPointView(point, this.#destinations, this.#offers);
+    const previewPointComponent = new PreviewPointView(point, this.#destinations, this.#offers);
+    const editingPointComponent = new EditingPointView(point, this.#destinations, this.#offers);
 
-    const replacePointToEditForm = () => {
-      this.#pointsList.element.replaceChild(pointEditComponent.element, pointComponent.element);
+    const replacePreviewPointToEditingPoint = () => {
+      replace(editingPointComponent, previewPointComponent);
     };
 
-    const replaceEditFormToPoint = () => {
-      this.#pointsList.element.replaceChild(pointComponent.element, pointEditComponent.element);
+    const replaceEditingPointToPreviewPoint = () => {
+      replace(previewPointComponent, editingPointComponent);
     };
 
     const onEscKeyDown = (evt) => {
       if (evt.key === 'Escape' || evt.key === 'Esc') {
         evt.preventDefault();
-        replaceEditFormToPoint();
+        replaceEditingPointToPreviewPoint();
         document.removeEventListener('keydown', onEscKeyDown);
       }
     };
 
-    pointComponent.element.querySelector('.event__rollup-btn').addEventListener('click', () => {
-      replacePointToEditForm();
+    previewPointComponent.setEditClickHandler(() => {
+      replacePreviewPointToEditingPoint();
       document.addEventListener('keydown', onEscKeyDown);
     });
 
-    pointEditComponent.element.querySelector('.event__rollup-btn').addEventListener('click', (evt) => {
-      evt.preventDefault();
-      replaceEditFormToPoint();
+    editingPointComponent.setPreviewClickHandler(() => {
+      replaceEditingPointToPreviewPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    pointEditComponent.element.querySelector('form').addEventListener('submit', (evt) => {
-      evt.preventDefault();
-      replaceEditFormToPoint();
+    editingPointComponent.setFormSubmitHandler(() => {
+      replaceEditingPointToPreviewPoint();
       document.removeEventListener('keydown', onEscKeyDown);
     });
 
-    render(pointComponent, this.#pointsList.element);
+    render(previewPointComponent, this.#pointsList.element);
   };
 }
