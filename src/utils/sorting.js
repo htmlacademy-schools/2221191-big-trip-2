@@ -1,12 +1,5 @@
 import dayjs from 'dayjs';
-
-const SortType = {
-  DAY: 'day',
-  EVENT: 'event',
-  TIME: 'time',
-  PRICE: 'price',
-  OFFER: 'offer',
-};
+import { SortType } from '../const';
 
 const sortPricePoint = (pointA, pointB) => pointB.basePrice - pointA.basePrice;
 
@@ -24,4 +17,4 @@ const sorting = {
   [SortType.PRICE]: (points) => points.sort(sortPricePoint)
 };
 
-export { SortType, sorting };
+export { sorting };
