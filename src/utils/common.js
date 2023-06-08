@@ -9,24 +9,14 @@ const getRandomElement = (elements) => {
   return elements[getRandomInteger(MIN, max)];
 };
 
-const updateItem = (items, update) => {
-  const index = items.findIndex((item) => item.id === update.id);
-
-  if (index === -1) {
-    return items;
+const capitalizeValue = (value) => {
+  if (value === false) {
+    return '';
   }
 
-  return [
-    ...items.slice(0, index),
-    update,
-    ...items.slice(index + 1),
-  ];
+  const capFirstValue = value[0].toUpperCase();
+  const restOfValue = value.slice(1);
+  return capFirstValue + restOfValue;
 };
 
-const doCapitalizeString = (string) => {
-  const capFirstString = string[0].toUpperCase();
-  const restOfString = string.slice(1);
-  return capFirstString + restOfString;
-};
-
-export { getRandomInteger, updateItem, getRandomElement, doCapitalizeString };
+export { getRandomInteger, getRandomElement, capitalizeValue };
