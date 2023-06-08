@@ -1,6 +1,6 @@
 import { render, replace, remove } from '../framework/render.js';
 import PreviewPointView from '../view/preview-point-view.js';
-import EditingPointView from '../view/editing-point-view.js';
+import PointView from '../view/point-view.js';
 import { UserAction, UpdateType } from '../const.js';
 
 const Mode = {
@@ -13,6 +13,8 @@ export default class PointPresenter {
   #previewPointComponent = null;
   #editingPointComponent = null;
   #pointsModel = null;
+  #destinationsModel = null;
+  #offersModel = null;
 
   #destinations = null;
   #offers = null;
@@ -22,36 +24,37 @@ export default class PointPresenter {
 
   #point = null;
   #mode = Mode.PREVIEW;
-  #isNewPoint = false;
 
-  constructor(pointListContainer, pointsModel, changeData, changeMode) {
+  constructor({pointListContainer, pointsModel, changeData, changeMode, destinationsModel, offersModel}) {
     this.#pointListContainer = pointListContainer;
     this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
     this.#changeData = changeData;
     this.#changeMode = changeMode;
   }
 
   init(point) {
     this.#point = point;
-    this.#destinations = [...this.#pointsModel.destinations];
-    this.#offers = [...this.#pointsModel.offers];
+    this.#destinations = [...this.#destinationsModel.destinations];
+    this.#offers = [...this.#offersModel.offers];
 
     const prevPreviewPointComponent = this.#previewPointComponent;
     const prevEditingPointComponent = this.#editingPointComponent;
 
     this.#previewPointComponent = new PreviewPointView(point, this.#destinations, this.#offers);
-    this.#editingPointComponent = new EditingPointView({
+    this.#editingPointComponent = new PointView({
       point: point,
       destination: this.#destinations,
       offers: this.#offers,
-      isNewPoint: this.#isNewPoint
+      isNewPoint: false
     });
 
     this.#previewPointComponent.setEditClickHandler(this.#handleEditClick);
     this.#previewPointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
     this.#editingPointComponent.setPreviewClickHandler(this.#handlePreviewClick);
     this.#editingPointComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    this.#editingPointComponent.setDeleteClickHandler(this.#handleDeleteClick);
+    this.#editingPointComponent.setResetClickHandler(this.#handleResetClick);
 
     if (prevPreviewPointComponent === null || prevEditingPointComponent === null) {
       render(this.#previewPointComponent, this.#pointListContainer);
@@ -128,7 +131,7 @@ export default class PointPresenter {
     this.#replaceEditingPointToPreviewPoint();
   };
 
-  #handleDeleteClick = (point) => {
+  #handleResetClick = (point) => {
     this.#changeData(
       UserAction.DELETE_POINT,
       UpdateType.MINOR,

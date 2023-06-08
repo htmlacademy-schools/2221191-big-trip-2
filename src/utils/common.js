@@ -9,14 +9,4 @@ const getRandomElement = (elements) => {
   return elements[getRandomInteger(MIN, max)];
 };
 
-const capitalizeValue = (value) => {
-  if (value === false) {
-    return '';
-  }
-
-  const capFirstValue = value[0].toUpperCase();
-  const restOfValue = value.slice(1);
-  return capFirstValue + restOfValue;
-};
-
-export { getRandomInteger, getRandomElement, capitalizeValue };
+export { getRandomInteger, getRandomElement };
