@@ -7,6 +7,6 @@ const createTripEventsTemplate = () => (
 
 export default class PointsListView extends AbstractView {
   get template () {
-    return createTripEventsTemplate;
+    return createTripEventsTemplate();
   }
 }
