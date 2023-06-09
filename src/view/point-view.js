@@ -5,6 +5,7 @@ import dayjs from 'dayjs';
 import flatpickr from 'flatpickr';
 import he from 'he';
 import 'flatpickr/dist/flatpickr.min.css';
+
 const BLANK_POINT = {
   basePrice: 100,
   dateFrom: dayjs(),
@@ -15,21 +16,11 @@ const BLANK_POINT = {
   type: PointType.TAXI,
 };
 
-const renderDestinationPictures = (pictures) => {
-  if (pictures.length === 0) {
-    return '';
-  }
-  return pictures.map((picture) => `<img class="event__photo"
-  src="${picture.src}" alt="${picture.description}">`).join('');
-};
+const renderDestinationPictures = (pictures) => pictures.length === 0 ? '' :
+  pictures.map((picture) => `<img class="event__photo" src="${picture.src}" alt="${picture.description}">`).join('');
 
-const renderDestinationNames = (destinations) => {
-  if (destinations.length === 0) {
-    return '';
-  }
-  return destinations.map((destination) => `<option value="${destination.name}">
-  </option>`).join('');
-};
+const renderDestinationNames = (destinations) => destinations.length === 0 ? '' :
+  destinations.map((destination) => `<option value="${destination.name}"></option>`).join('');
 
 const renderOffers = (allOffers, checkedOffers, isDisabled) => allOffers.map((offer) => `<div class="event__offer-selector">
     <input class="event__offer-checkbox  visually-hidden" id="event-offer-${offer.id}" type="checkbox" name="event-offer-luggage" ${checkedOffers.includes(offer.id) ? 'checked' : ''} ${isDisabled ? 'disabled' : ''}>
@@ -40,18 +31,13 @@ const renderOffers = (allOffers, checkedOffers, isDisabled) => allOffers.map((of
     </label>
   </div>`).join('');
 
-const renderOffersContainer = (allOffers, checkedOffers, isDisabled) => {
-  if (!allOffers || allOffers.offers.length === 0) {
-    return '';
-  }
-
-  return `<section class="event__section  event__section--offers">
-  <h3 class="event__section-title  event__section-title--offers">Offers</h3>
-  <div class="event__available-offers">
-  ${renderOffers(allOffers.offers, checkedOffers, isDisabled)}
-  </div>
-  </section>`;
-};
+const renderOffersContainer = (allOffers, checkedOffers, isDisabled) => (!allOffers || allOffers.offers.length === 0) ? '' :
+  `<section class="event__section  event__section--offers">
+    <h3 class="event__section-title  event__section-title--offers">Offers</h3>
+    <div class="event__available-offers">
+    ${renderOffers(allOffers.offers, checkedOffers, isDisabled)}
+    </div>
+    </section>`;
 
 const renderDestinationContainer = (destination) => {
   if (destination) {
@@ -139,17 +125,17 @@ const createEditingPointTemplate = (point, destinations, allOffers, isNewPoint) 
 };
 
 export default class PointView extends AbstractStatefulView {
-  #destination = null;
+  #destinations = null;
   #offers = null;
   #datepickerFrom = null;
   #datepickerTo = null;
   #isNewPoint = null;
   #offersByType = null;
 
-  constructor({point = BLANK_POINT, destination, offers, isNewPoint}) {
+  constructor({point = BLANK_POINT, destinations, offers, isNewPoint}) {
     super();
     this._state = PointView.parsePointToState(point);
-    this.#destination = destination;
+    this.#destinations = destinations;
     this.#offers = offers;
     this.#isNewPoint = isNewPoint;
     this.#offersByType = this.#offers.find((offer) => offer.type === this._state.type);
@@ -169,7 +155,7 @@ export default class PointView extends AbstractStatefulView {
   };
 
   get template () {
-    return createEditingPointTemplate(this._state, this.#destination, this.#offers, this.#isNewPoint);
+    return createEditingPointTemplate(this._state, this.#destinations, this.#offers, this.#isNewPoint);
   }
 
   setPreviewClickHandler = (callback) => {
@@ -219,7 +205,7 @@ export default class PointView extends AbstractStatefulView {
 
   #pointDestinationChangeHandler = (evt) => {
     evt.preventDefault();
-    const destination = this.#destination.find((dest) => dest.name === evt.target.value);
+    const destination = this.#destinations.find((dest) => dest.name === evt.target.value);
     this.updateElement({
       destination: destination.id,
     });
@@ -235,6 +221,7 @@ export default class PointView extends AbstractStatefulView {
   #pointTypeChangeHandler = (evt) => {
     evt.preventDefault();
     this._state.offers = [];
+    this.#offersByType = this.#offers.find((offer) => offer.type === evt.target.value);
     this.updateElement({
       type: evt.target.value,
     });
@@ -273,7 +260,7 @@ export default class PointView extends AbstractStatefulView {
   #offersChangeHandler = (evt) => {
     evt.preventDefault();
     const offerId = Number(evt.target.id.slice(-1));
-    const offers = this._state.offers.filter((n) => n !== offerId);
+    const offers = this._state.offers.filter((offer) => offer !== offerId);
     let currentOffers = [...this._state.offers];
     if (offers.length !== this._state.offers.length) {
       currentOffers = offers;
@@ -295,7 +282,7 @@ export default class PointView extends AbstractStatefulView {
     this.element.querySelector('.event__type-list').addEventListener('change', this.#pointTypeChangeHandler);
     this.element.querySelector('.event__input').addEventListener('change', this.#pointDestinationChangeHandler);
 
-    if(this.#offersByType && this.#offersByType.offers.length > 0) {
+    if (this.#offersByType && this.#offersByType.offers.length > 0) {
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
     }
     this.element.querySelector('.event__input--price').addEventListener('change', this.#pointPriceChangeHandler);
