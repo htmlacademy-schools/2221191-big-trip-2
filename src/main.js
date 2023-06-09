@@ -1,4 +1,3 @@
-// hi:)
 import { render } from './framework/render.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import BoardPresenter from './presenter/board-presenter.js';

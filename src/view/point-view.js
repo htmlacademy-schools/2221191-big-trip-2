@@ -39,6 +39,7 @@ const renderOffersContainer = (allOffers, checkedOffers, isDisabled) => (!allOff
     </div>
     </section>`;
 
+
 const renderDestinationContainer = (destination) => {
   if (destination) {
     return `<section class="event__section  event__section--destination">
@@ -86,6 +87,7 @@ const createEditingPointTemplate = (point, destinations, allOffers, isNewPoint) 
             <img class="event__type-icon" width="17" height="17" src="img/icons/${type}.png" alt="Event ${type} icon">
           </label>
           <input class="event__type-toggle  visually-hidden" id="event-type-toggle-1" type="checkbox" ${isDisabled ? 'disabled' : ''}>
+
           <div class="event__type-list">
             <fieldset class="event__type-group">
               <legend class="visually-hidden">Event type</legend>
@@ -93,6 +95,7 @@ const createEditingPointTemplate = (point, destinations, allOffers, isNewPoint) 
             </fieldset>
           </div>
         </div>
+
         <div class="event__field-group  event__field-group--destination">
           <label class="event__label  event__type-output" for="event-destination-${destination}">
           ${type}
@@ -102,7 +105,9 @@ const createEditingPointTemplate = (point, destinations, allOffers, isNewPoint) 
             ${renderDestinationNames(destinations)}
           </datalist>
         </div>
+
         ${renderEditingPointDateTemplate(dateFrom, dateTo, isDisabled)}
+
         <div class="event__field-group  event__field-group--price">
           <label class="event__label" for="event-price-1">
             <span class="visually-hidden">Price</span>
@@ -144,6 +149,7 @@ export default class PointView extends AbstractStatefulView {
 
   removeElement = () => {
     super.removeElement();
+
     if (this.#datepickerFrom) {
       this.#datepickerFrom.destroy();
       this.#datepickerFrom = null;
@@ -282,7 +288,7 @@ export default class PointView extends AbstractStatefulView {
     this.element.querySelector('.event__type-list').addEventListener('change', this.#pointTypeChangeHandler);
     this.element.querySelector('.event__input').addEventListener('change', this.#pointDestinationChangeHandler);
 
-    if (this.#offersByType && this.#offersByType.offers.length > 0) {
+    if (this.#offersByType && this.#offersByType.offers.length > 0)  {
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
     }
     this.element.querySelector('.event__input--price').addEventListener('change', this.#pointPriceChangeHandler);
@@ -314,6 +320,7 @@ export default class PointView extends AbstractStatefulView {
     delete point.isDisabled;
     delete point.isSaving;
     delete point.isDeleting;
+
     return point;
   };
 }

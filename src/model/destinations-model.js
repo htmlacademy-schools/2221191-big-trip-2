@@ -28,3 +28,4 @@ export default class DestinationsModel extends Observable {
     return this.#isSuccessfulLoading;
   }
 }
+

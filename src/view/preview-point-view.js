@@ -43,7 +43,7 @@ const createPreviewPointTemplate = (point, destinations, allOffers) => {
       </p>
       <h4 class="visually-hidden">Offers:</h4>
       <ul class="event__selected-offers">
-      ${renderOffers(allPointTypeOffers, offers)}
+        ${renderOffers(allPointTypeOffers, offers)}
       </ul>
       <button class="event__favorite-btn ${isFavorite ? 'event__favorite-btn--active' : ''}" type="button">
       <span class="visually-hidden">Add to favorite</span>

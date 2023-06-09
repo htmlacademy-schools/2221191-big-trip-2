@@ -1,5 +1,4 @@
 import dayjs from 'dayjs';
-
 const HOUR_MINUTES_COUNT = 60;
 const TOTAL_DAY_MINUTES_COUNT = 1440;
 const DATE_FORMAT = 'YYYY-MM-DD';
@@ -13,7 +12,6 @@ const getDaysOutput = (days) => days <= 0 ? '' : `${`${days}`.padStart(2, '0')}D
 const getHoursOutput = (days, restHours) => (days <= 0 && restHours <= 0) ? '' : `${`${restHours}`.padStart(2, '0')}H`;
 
 const getMinutesOutput = (restMinutes) => `${`${restMinutes}`.padStart(2, '0')}M`;
-
 
 const getDuration = (dateFrom, dateTo) => {
   const start = dayjs(dateFrom);
@@ -32,6 +30,7 @@ const getDuration = (dateFrom, dateTo) => {
 };
 
 const getDate = (date) => dayjs(date).format(DATE_FORMAT);
+
 const getTime = (date) => dayjs(date).format(TIME_FORMAT);
 
 const getDateTime = (date) => dayjs(date).format(DATE_TIME_FORMAT);

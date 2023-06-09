@@ -40,3 +40,4 @@ export default class NewPointButtonPresenter {
     this.#newPointButtonComponent.element.disabled = true;
   };
 }
+

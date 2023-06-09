@@ -39,11 +39,10 @@ export default class BoardPresenter {
     this.#tripInfoContainer = tripInfoContainer;
     this.#tripContainer = tripContainer;
     this.#pointsModel = pointsModel;
-
     this.#filterModel = filterModel;
-
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
+
 
     this.#pointNewPresenter = new PointNewPresenter({
       pointListContainer: this.#pointListComponent.element,
@@ -243,3 +242,5 @@ export default class BoardPresenter {
     this.#renderBoard();
   };
 }
+
+

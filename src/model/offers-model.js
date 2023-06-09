@@ -28,3 +28,4 @@ export default class OffersModel extends Observable{
     return this.#isSuccessfulLoading;
   }
 }
+
