@@ -1,6 +1,5 @@
 import { render, remove, RenderPosition } from '../framework/render.js';
 import PointView from '../view/point-view.js';
-import {nanoid} from 'nanoid';
 import { UserAction, UpdateType } from '../const.js';
 
 export default class PointNewPresenter {
@@ -9,17 +8,15 @@ export default class PointNewPresenter {
   #changeData = null;
   #destroyCallback = null;
 
-  #pointsModel = null;
   #destinationsModel = null;
   #offersModel = null;
 
   #destinations = null;
   #offers = null;
 
-  constructor({pointListContainer, changeData, pointsModel, destinationsModel, offersModel}) {
+  constructor({pointListContainer, changeData, destinationsModel, offersModel}) {
     this.#pointListContainer = pointListContainer;
     this.#changeData = changeData;
-    this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
   }
@@ -27,8 +24,7 @@ export default class PointNewPresenter {
   init = (callback) => {
     this.#destroyCallback = callback;
 
-    if (this.#creatingPointComponent
-      !== null) {
+    if (this.#creatingPointComponent !== null) {
       return;
     }
     this.#destinations = [...this.#destinationsModel.destinations];
@@ -48,18 +44,35 @@ export default class PointNewPresenter {
   };
 
   destroy = () => {
-    if (this.#creatingPointComponent
-      === null) {
+    if (this.#creatingPointComponent === null) {
       return;
     }
 
     this.#destroyCallback?.();
 
     remove(this.#creatingPointComponent);
-    this.#creatingPointComponent
- = null;
+    this.#creatingPointComponent = null;
 
     document.removeEventListener('keydown', this.#escKeyDownHandler);
+  };
+
+  setSaving = () => {
+    this.#creatingPointComponent.updateElement({
+      isDisabled: true,
+      isSaving: true,
+    });
+  };
+
+  setAborting = () => {
+    this.#creatingPointComponent.shake(this.#resetFormState);
+  };
+
+  #resetFormState = () => {
+    this.#creatingPointComponent.updateElement({
+      isDisabled: false,
+      isSaving: false,
+      isDeleting: false,
+    });
   };
 
   #escKeyDownHandler = (evt) => {
@@ -77,8 +90,7 @@ export default class PointNewPresenter {
     this.#changeData(
       UserAction.ADD_POINT,
       UpdateType.MINOR,
-      {id: nanoid(), ...point},
+      point,
     );
-    this.destroy();
   };
 }
