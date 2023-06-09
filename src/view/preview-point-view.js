@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {humanizePointDueDate, duration, getDate, getTime } from '../utils/point.js';
+import {humanizePointDueDate, duration, getDate, getTime } from '../utils/date-point.js';
 import he from 'he';
 
 const renderOffers = (allOffers, checkedOffers) => {

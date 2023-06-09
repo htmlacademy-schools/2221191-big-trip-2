@@ -1,5 +1,5 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
-import { getDateTime } from '../utils/point.js';
+import { getDateTime } from '../utils/date-point.js';
 import { PointType, PointTypeDescription } from '../const.js';
 import dayjs from 'dayjs';
 import flatpickr from 'flatpickr';
