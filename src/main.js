@@ -1,4 +1,3 @@
-// hi:)
 import { render } from './framework/render.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import BoardPresenter from './presenter/board-presenter.js';
@@ -24,6 +23,8 @@ const filterModel = new FilterModel();
 const filterPresenter = new FilterPresenter({
   filterContainer: siteHeaderElement.querySelector('.trip-controls__filters'),
   pointsModel: pointsModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
   filterModel: filterModel
 });
 filterPresenter.init();
@@ -41,10 +42,10 @@ boardPresenter.init();
 const newPointButtonPresenter = new NewPointButtonPresenter({
   newPointButtonContainer: siteHeaderElement,
   destinationsModel: destinationsModel,
+  pointsModel: pointsModel,
   offersModel: offersModel,
   boardPresenter: boardPresenter
 });
-
 newPointButtonPresenter.init();
 
 offersModel.init().finally(() => {
