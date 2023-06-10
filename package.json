@@ -12,7 +12,9 @@
   ],
   "scripts": {
     "lint": "eslint src/",
-    "build": "webpack"
+    "test": "npm run eslint",
+    "build": "webpack",
+    "start": "webpack serve --mode development --open"
   },
   "devDependencies": {
     "eslint": "8.28.0",

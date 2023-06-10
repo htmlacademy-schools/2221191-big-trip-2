@@ -288,11 +288,7 @@ export default class PointView extends AbstractStatefulView {
     this.element.querySelector('.event__type-list').addEventListener('change', this.#pointTypeChangeHandler);
     this.element.querySelector('.event__input').addEventListener('change', this.#pointDestinationChangeHandler);
 
-<<<<<<< HEAD
     if (this.#offersByType && this.#offersByType.offers.length > 0) {
-=======
-    if (this.#offersByType && this.#offersByType.offers.length > 0)  {
->>>>>>> master
       this.element.querySelector('.event__available-offers').addEventListener('change', this.#offersChangeHandler);
     }
     this.element.querySelector('.event__input--price').addEventListener('change', this.#pointPriceChangeHandler);

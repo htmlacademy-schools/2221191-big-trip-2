@@ -9,21 +9,12 @@ const Mode = {
 };
 
 export default class PointPresenter {
-<<<<<<< HEAD
   #containerPointList = null;
   #componentPreviewPoint = null;
   #componentEditingPoint = null;
 
   #modelDestinations = null;
   #modelOffers = null;
-=======
-  #pointListContainer = null;
-  #previewPointComponent = null;
-  #editingPointComponent = null;
-
-  #destinationsModel = null;
-  #offersModel = null;
->>>>>>> master
 
   #destinations = null;
   #offers = null;
@@ -47,13 +38,8 @@ export default class PointPresenter {
     this.#destinations = [...this.#modelDestinations.destinations];
     this.#offers = [...this.#modelOffers.offers];
 
-<<<<<<< HEAD
     const prevPreviewPointComponent = this.#componentPreviewPoint;
     const prevEditingPointComponent = this.#componentEditingPoint;
-=======
-    const prevPreviewPointComponent = this.#previewPointComponent;
-    const prevEditingPointComponent =  this.#editingPointComponent;
->>>>>>> master
 
     this.#componentPreviewPoint = new PreviewPointView(point, this.#destinations, this.#offers);
     this.#componentEditingPoint = new PointView({

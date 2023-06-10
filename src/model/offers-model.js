@@ -3,17 +3,18 @@ import Observable from '../framework/observable.js';
 export default class OffersModel extends Observable{
   #offers = [];
   #offersApiService = null;
+  #isSuccessfulLoading = false;
 
   constructor(offersApiService) {
     super();
-    this.#ApiServOffers = offersApiService;
+    this.#offersApiService = offersApiService;
   }
 
   init = async () => {
     try {
       this.#offers = await this.#offersApiService.offers;
+      this.#isSuccessfulLoading = true;
     } catch(err) {
-      this.#isSucceedLoading = false;
       this.#offers = [];
       this.#isSuccessfulLoading = false;
     }
@@ -22,5 +23,10 @@ export default class OffersModel extends Observable{
   get offers() {
     return this.#offers;
   }
+
+  get isSuccessfulLoading() {
+    return this.#isSuccessfulLoading;
+  }
 }
+
 
