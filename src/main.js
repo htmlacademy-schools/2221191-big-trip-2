@@ -20,6 +20,7 @@ const destinationsModel = new DestinationsModel(new DestinationsApiService(END_P
 const offersModel = new OffersModel(new OffersApiService(END_POINT, AUTHORIZATION));
 
 const filterModel = new FilterModel();
+
 const filterPresenter = new FilterPresenter({
   filterContainer: siteHeaderElement.querySelector('.trip-controls__filters'),
   pointsModel: pointsModel,
@@ -27,6 +28,7 @@ const filterPresenter = new FilterPresenter({
   offersModel: offersModel,
   filterModel: filterModel
 });
+
 filterPresenter.init();
 
 const boardPresenter = new BoardPresenter({
@@ -37,6 +39,7 @@ const boardPresenter = new BoardPresenter({
   destinationsModel: destinationsModel,
   offersModel: offersModel
 });
+
 boardPresenter.init();
 
 const newPointButtonPresenter = new NewPointButtonPresenter({
@@ -51,7 +54,7 @@ newPointButtonPresenter.init();
 offersModel.init().finally(() => {
   destinationsModel.init().finally(() => {
     pointsModel.init().finally(() => {
-      newPointButtonPresenter.renderNewPointButton();
+      newPointButtonPresenter.renderButtonNewPoint();
     });
   });
 });

@@ -8,42 +8,42 @@ export default class PointsApiService extends ApiService {
   }
 
   updatePoint = async (point) => {
-    const response = await this._load({
+    const answer = await this._load({
       url: `points/${point.id}`,
       method: ApiServiceResponseMethod.PUT,
-      body: JSON.stringify(this.#adaptToServer(point)),
+      body: JSON.stringify(this.#fitToServer(point)),
       headers: new Headers({'Content-Type': 'application/json'}),
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
+    const parsedAnswer = await ApiService.parseResponse(answer);
 
-    return parsedResponse;
+    return parsedAnswer;
   };
 
-  addPoint = async (point) => {
-    const response = await this._load({
+  appendPoint = async (point) => {
+    const answer = await this._load({
       url: 'points',
       method: ApiServiceResponseMethod.POST,
-      body: JSON.stringify(this.#adaptToServer(point)),
+      body: JSON.stringify(this.#fitToServer(point)),
       headers: new Headers({'Content-Type': 'application/json'}),
     });
 
-    const parsedResponse = await ApiService.parseResponse(response);
+    const parsedAnswer = await ApiService.parseResponse(answer);
 
-    return parsedResponse;
+    return parsedAnswer;
   };
 
-  deletePoint = async (point) => {
-    const response = await this._load({
+  removePoint = async (point) => {
+    const answer = await this._load({
       url: `points/${point.id}`,
       method: ApiServiceResponseMethod.DELETE,
     });
 
-    return response;
+    return answer;
   };
 
-  #adaptToServer = (point) => {
-    const adaptedPoint = {...point,
+  #fitToServer = (point) => {
+    const fittedPoint = {...point,
       'base_price': point.basePrice,
       'date_from': point.dateFrom instanceof Date ? point.dateFrom.toISOString() : null,
       'date_to': point.dateTo instanceof Date ? point.dateTo.toISOString() : null,
@@ -51,11 +51,11 @@ export default class PointsApiService extends ApiService {
     };
 
     // Ненужные ключи мы удаляем
-    delete adaptedPoint.basePrice;
-    delete adaptedPoint.dateFrom;
-    delete adaptedPoint.dateTo;
-    delete adaptedPoint.isFavorite;
+    delete fittedPoint.basePrice;
+    delete fittedPoint.dateFrom;
+    delete fittedPoint.dateTo;
+    delete fittedPoint.isFavorite;
 
-    return adaptedPoint;
+    return fittedPoint;
   };
 }

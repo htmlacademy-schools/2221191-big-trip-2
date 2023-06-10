@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import {humanizePointDueDate } from '../utils/date-point.js';
+import { adaptPointDueDate } from '../utils/date-point.js';
 
 const renderRouteTrip = (points, destinations) => {
   if (points.length === 0) {
@@ -7,7 +7,7 @@ const renderRouteTrip = (points, destinations) => {
   }
   const routeWithoutRepeats = [points[0].destination];
   for (let i = 1; i < points.length; i++) {
-    if (points[i].destination !== points[i-1].destination) {
+    if (points[i].destination !== points[i - 1].destination) {
       routeWithoutRepeats.push(points[i].destination);
     }
   }
@@ -25,8 +25,8 @@ const renderDatesTrip = (points) => {
   if (points.length === 0) {
     return '';
   }
-  const startDate = points[0].dateFrom !== null ? humanizePointDueDate(points[0].dateFrom) : '';
-  const endDate = points[points.length - 1].dateTo !== null ? humanizePointDueDate(points[points.length - 1].dateTo) : '';
+  const startDate = points[0].dateFrom !== null ? adaptPointDueDate(points[0].dateFrom) : '';
+  const endDate = points[points.length - 1].dateTo !== null ? adaptPointDueDate(points[points.length - 1].dateTo) : '';
   return `${startDate}&nbsp;&mdash;&nbsp;${endDate}`;
 };
 
@@ -59,7 +59,7 @@ const createTripInfoTemplate = (points, destinations, offers) => {
   if (destinations.length === 0 || offers.length === 0) {
     return '';
   }
-  return  `<div class="trip-info"><div class="trip-info__main">
+  return `<div class="trip-info"><div class="trip-info__main">
   <h1 class="trip-info__title">${renderRouteTrip(points, destinations)}</h1>
 
   <p class="trip-info__dates">${renderDatesTrip(points)}</p>

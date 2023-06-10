@@ -9,12 +9,12 @@ const Mode = {
 };
 
 export default class PointPresenter {
-  #pointListContainer = null;
-  #previewPointComponent = null;
-  #editingPointComponent = null;
+  #containerPointList = null;
+  #componentPreviewPoint = null;
+  #componentEditingPoint = null;
 
-  #destinationsModel = null;
-  #offersModel = null;
+  #modelDestinations = null;
+  #modelOffers = null;
 
   #destinations = null;
   #offers = null;
@@ -26,46 +26,46 @@ export default class PointPresenter {
   #mode = Mode.PREVIEW;
 
   constructor({pointListContainer, changeData, changeMode, destinationsModel, offersModel}) {
-    this.#pointListContainer = pointListContainer;
-    this.#destinationsModel = destinationsModel;
-    this.#offersModel = offersModel;
+    this.#containerPointList = pointListContainer;
+    this.#modelDestinations = destinationsModel;
+    this.#modelOffers = offersModel;
     this.#changeData = changeData;
     this.#changeMode = changeMode;
   }
 
   init(point) {
     this.#point = point;
-    this.#destinations = [...this.#destinationsModel.destinations];
-    this.#offers = [...this.#offersModel.offers];
+    this.#destinations = [...this.#modelDestinations.destinations];
+    this.#offers = [...this.#modelOffers.offers];
 
-    const prevPreviewPointComponent = this.#previewPointComponent;
-    const prevEditingPointComponent =  this.#editingPointComponent;
+    const prevPreviewPointComponent = this.#componentPreviewPoint;
+    const prevEditingPointComponent = this.#componentEditingPoint;
 
-    this.#previewPointComponent = new PreviewPointView(point, this.#destinations, this.#offers);
-    this.#editingPointComponent = new PointView({
+    this.#componentPreviewPoint = new PreviewPointView(point, this.#destinations, this.#offers);
+    this.#componentEditingPoint = new PointView({
       point: point,
       destinations: this.#destinations,
       offers: this.#offers,
       isNewPoint: false
     });
 
-    this.#previewPointComponent.setEditClickHandler(this.#handleEditClick);
-    this.#previewPointComponent.setFavoriteClickHandler(this.#handleFavoriteClick);
-    this.#editingPointComponent.setPreviewClickHandler(this.#handlePreviewClick);
-    this.#editingPointComponent.setFormSubmitHandler(this.#handleFormSubmit);
-    this.#editingPointComponent.setResetClickHandler(this.#handleResetClick);
+    this.#componentPreviewPoint.setEditClickHandler(this.#handleEditClick);
+    this.#componentPreviewPoint.setFavoriteClickHandler(this.#handleFavoriteClick);
+    this.#componentEditingPoint.setPreviewClickHandler(this.#handlePreviewClick);
+    this.#componentEditingPoint.setFormSubmitHandler(this.#handleFormSubmit);
+    this.#componentEditingPoint.setResetClickHandler(this.#handleResetClick);
 
     if (prevPreviewPointComponent === null || prevEditingPointComponent === null) {
-      render(this.#previewPointComponent, this.#pointListContainer);
+      render(this.#componentPreviewPoint, this.#containerPointList);
       return;
     }
 
     switch (this.#mode) {
       case Mode.PREVIEW:
-        replace(this.#previewPointComponent, prevPreviewPointComponent);
+        replace(this.#componentPreviewPoint, prevPreviewPointComponent);
         break;
       case Mode.EDITING:
-        replace(this.#previewPointComponent, prevEditingPointComponent);
+        replace(this.#componentPreviewPoint, prevEditingPointComponent);
         this.#mode = Mode.PREVIEW;
         break;
     }
@@ -75,46 +75,46 @@ export default class PointPresenter {
   }
 
   destroy = () => {
-    remove(this.#previewPointComponent);
-    remove(this.#editingPointComponent);
+    remove(this.#componentPreviewPoint);
+    remove(this.#componentEditingPoint);
   };
 
-  resetView = () => {
+  redefineView = () => {
     if (this.#mode !== Mode.PREVIEW) {
-      this.#editingPointComponent.reset(this.#point);
+      this.#componentEditingPoint.reset(this.#point);
       this.#replaceEditingPointToPreviewPoint();
     }
   };
 
-  setSaving = () => {
+  defineSaving = () => {
     if (this.#mode === Mode.EDITING) {
-      this.#editingPointComponent.updateElement({
+      this.#componentEditingPoint.updateElement({
         isDisabled: true,
         isSaving: true,
       });
     }
   };
 
-  setDeleting = () => {
+  defineDeleting = () => {
     if (this.#mode === Mode.EDITING) {
-      this.#editingPointComponent.updateElement({
+      this.#componentEditingPoint.updateElement({
         isDisabled: true,
         isDeleting: true,
       });
     }
   };
 
-  setAborting = () => {
+  defineAborting = () => {
     if (this.#mode === Mode.PREVIEW) {
-      this.#previewPointComponent.shake();
+      this.#componentPreviewPoint.shake();
       return;
     }
 
-    this.#editingPointComponent.shake(this.#resetFormState);
+    this.#componentEditingPoint.shake(this.#resetFormState);
   };
 
   #resetFormState = () => {
-    this.#editingPointComponent.updateElement({
+    this.#componentEditingPoint.updateElement({
       isDisabled: false,
       isSaving: false,
       isDeleting: false,
@@ -122,14 +122,14 @@ export default class PointPresenter {
   };
 
   #replacePreviewPointToEditingPoint = () => {
-    replace(this.#editingPointComponent, this.#previewPointComponent);
+    replace(this.#componentEditingPoint, this.#componentPreviewPoint);
     document.addEventListener('keydown', this.#escKeyDownHandler);
     this.#changeMode();
     this.#mode = Mode.EDITING;
   };
 
   #replaceEditingPointToPreviewPoint = () => {
-    replace(this.#previewPointComponent, this.#editingPointComponent);
+    replace(this.#componentPreviewPoint, this.#componentEditingPoint);
     document.removeEventListener('keydown', this.#escKeyDownHandler);
     this.#mode = Mode.PREVIEW;
   };
@@ -137,7 +137,7 @@ export default class PointPresenter {
   #escKeyDownHandler = (evt) => {
     if (evt.key === 'Escape' || evt.key === 'Esc') {
       evt.preventDefault();
-      this.resetView();
+      this.redefineView();
     }
   };
 
@@ -154,7 +154,7 @@ export default class PointPresenter {
   };
 
   #handlePreviewClick = () => {
-    this.resetView();
+    this.redefineView();
   };
 
   #handleFormSubmit = (point) => {
