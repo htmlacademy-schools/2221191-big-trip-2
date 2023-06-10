@@ -3,31 +3,31 @@ import TripInfoView from '../view/trip-info-view.js';
 
 export default class TripInfoPresenter {
   #points = null;
-  #tripInfoComponent = null;
-  #tripInfoContainer = null;
-  #destinationsModel = null;
-  #offersModel = null;
+  #componentTripInformation = null;
+  #containerTripInformation = null;
+  #modelDestinations = null;
+  #modelOffers = null;
 
   #destinations = null;
   #offers = null;
 
   constructor(tripInfoContainer, destinationsModel, offersModel) {
-    this.#tripInfoContainer = tripInfoContainer;
-    this.#destinationsModel = destinationsModel;
-    this.#offersModel = offersModel;
+    this.#containerTripInformation = tripInfoContainer;
+    this.#modelDestinations = destinationsModel;
+    this.#modelOffers = offersModel;
   }
 
   init = (points) => {
     this.#points = points;
-    this.#destinations = [...this.#destinationsModel.destinations];
-    this.#offers = [...this.#offersModel.offers];
+    this.#destinations = [...this.#modelDestinations.destinations];
+    this.#offers = [...this.#modelOffers.offers];
 
-    this.#tripInfoComponent = new TripInfoView(this.#points, this.#destinations, this.#offers);
+    this.#componentTripInformation = new TripInfoView(this.#points, this.#destinations, this.#offers);
 
-    render(this.#tripInfoComponent, this.#tripInfoContainer);
+    render(this.#componentTripInformation, this.#containerTripInformation);
   };
 
   destroy = () => {
-    remove(this.#tripInfoComponent);
+    remove(this.#componentTripInformation);
   };
 }

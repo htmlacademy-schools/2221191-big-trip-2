@@ -1,4 +1,3 @@
-// hi:)
 import { render } from './framework/render.js';
 import FilterPresenter from './presenter/filter-presenter.js';
 import BoardPresenter from './presenter/board-presenter.js';
@@ -21,11 +20,15 @@ const destinationsModel = new DestinationsModel(new DestinationsApiService(END_P
 const offersModel = new OffersModel(new OffersApiService(END_POINT, AUTHORIZATION));
 
 const filterModel = new FilterModel();
+
 const filterPresenter = new FilterPresenter({
   filterContainer: siteHeaderElement.querySelector('.trip-controls__filters'),
   pointsModel: pointsModel,
+  destinationsModel: destinationsModel,
+  offersModel: offersModel,
   filterModel: filterModel
 });
+
 filterPresenter.init();
 
 const boardPresenter = new BoardPresenter({
@@ -36,11 +39,13 @@ const boardPresenter = new BoardPresenter({
   destinationsModel: destinationsModel,
   offersModel: offersModel
 });
+
 boardPresenter.init();
 
 const newPointButtonPresenter = new NewPointButtonPresenter({
   newPointButtonContainer: siteHeaderElement,
   destinationsModel: destinationsModel,
+  pointsModel: pointsModel,
   offersModel: offersModel,
   boardPresenter: boardPresenter
 });
@@ -50,7 +55,7 @@ newPointButtonPresenter.init();
 offersModel.init().finally(() => {
   destinationsModel.init().finally(() => {
     pointsModel.init().finally(() => {
-      newPointButtonPresenter.renderNewPointButton();
+      newPointButtonPresenter.renderButtonNewPoint();
     });
   });
 });

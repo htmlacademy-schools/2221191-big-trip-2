@@ -4,23 +4,28 @@ import { filter } from '../utils/filter.js';
 import { FilterType, UpdateType } from '../const.js';
 
 export default class FilterPresenter {
-  #filterContainer = null;
-  #filterModel = null;
-  #pointsModel = null;
+  #containerFilter = null;
 
-  #filterComponent = null;
+  #modelFilter = null;
+  #modelPoints = null;
+  #modelOffers = null;
+  #modelDestinations = null;
 
-  constructor({filterContainer, pointsModel, filterModel}) {
-    this.#filterContainer = filterContainer;
-    this.#filterModel = filterModel;
-    this.#pointsModel = pointsModel;
+  #componentFilter = null;
 
-    this.#pointsModel.addObserver(this.#handleModelEvent);
-    this.#filterModel.addObserver(this.#handleModelEvent);
+  constructor({filterContainer, pointsModel, destinationsModel, offersModel, filterModel}) {
+    this.#containerFilter = filterContainer;
+    this.#modelFilter = filterModel;
+    this.#modelPoints = pointsModel;
+    this.#modelDestinations = destinationsModel;
+    this.#modelOffers = offersModel;
+
+    this.#modelPoints.addObserver(this.#handleModelEvent);
+    this.#modelFilter.addObserver(this.#handleModelEvent);
   }
 
   get filters() {
-    const points = this.#pointsModel.points;
+    const points = this.#modelPoints.points;
 
     return [
       {
@@ -43,29 +48,34 @@ export default class FilterPresenter {
 
   init = () => {
     const filters = this.filters;
-    const prevFilterComponent = this.#filterComponent;
+    const prevFilterComponent = this.#componentFilter;
 
-    this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
-    this.#filterComponent.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
+    this.#componentFilter = new FilterView(filters, this.#modelFilter.filter);
+    this.#componentFilter.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
 
     if (prevFilterComponent === null) {
-      render(this.#filterComponent, this.#filterContainer);
+      render(this.#componentFilter, this.#containerFilter);
       return;
     }
 
-    replace(this.#filterComponent, prevFilterComponent);
+    replace(this.#componentFilter, prevFilterComponent);
     remove(prevFilterComponent);
   };
 
   #handleModelEvent = () => {
+    if (this.#modelOffers.offers.length === 0 || this.#modelOffers.isSuccessfulLoading === false ||
+      this.#modelDestinations.destinations.length === 0 || this.#modelDestinations.isSuccessfulLoading === false ||
+      this.#modelPoints.isSuccessfulLoading === false) {
+      return;
+    }
     this.init();
   };
 
   #handleFilterTypeChange = (filterType) => {
-    if (this.#filterModel.filter === filterType) {
+    if (this.#modelFilter.filter === filterType) {
       return;
     }
 
-    this.#filterModel.setFilter(UpdateType.MAJOR, filterType);
+    this.#modelFilter.setFilter(UpdateType.MAJOR, filterType);
   };
 }
