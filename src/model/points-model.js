@@ -2,9 +2,8 @@ import Observable from '../framework/observable.js';
 import { UpdateType } from '../const.js';
 
 export default class PointsModel extends Observable{
-  #locations = [];
-  #apiServLocations = null;
-  #isSucceedLoading = false;
+  #points = [];
+  #pointsApiService = null;
 
   constructor(locaionApiService) {
     super();
@@ -13,12 +12,10 @@ export default class PointsModel extends Observable{
 
   init = async () => {
     try {
-      const locations = await this.#apiServLocations.points;
-      this.#isSucceedLoading = true;
-      this.#locations = locations.map(this.#adjustToClient);
+      const points = await this.#pointsApiService.points;
+      this.#points = points.map(this.#adaptToClient);
     } catch(err) {
-      this.#isSucceedLoading = false;
-      this.#locations = [];
+      this.#points = [];
     }
 
     this._notify(UpdateType.INIT);
@@ -32,8 +29,8 @@ export default class PointsModel extends Observable{
     return this.#isSucceedLoading;
   }
 
-  upgradePoint = async (updateType, update) => {
-    const pointer = this.#locations.findIndex((point) => point.id === update.id);
+  updatePoint = async (updateType, update) => {
+    const index = this.#points.findIndex((point) => point.id === update.id);
 
     if (pointer === -1) {
       throw new Error('Can\'t update unexisting point');

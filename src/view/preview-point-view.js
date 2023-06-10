@@ -1,5 +1,9 @@
 import AbstractView from '../framework/view/abstract-view.js';
+<<<<<<< HEAD
 import { adaptPointDueDate, getLengthTrip, getDate, getTime } from '../utils/date-point.js';
+=======
+import {humanizePointDueDate, getDuration, getDate, getTime } from '../utils/date-point.js';
+>>>>>>> master
 import he from 'he';
 
 const renderOffers = (allOffers, checkedOffers) => {
@@ -18,9 +22,15 @@ const renderOffers = (allOffers, checkedOffers) => {
 const createPreviewPointTemplate = (point, destinations, allOffers) => {
   const {basePrice, type, destination, isFavorite, dateFrom, dateTo, offers} = point;
   const allPointTypeOffers = allOffers.find((offer) => offer.type === type);
+<<<<<<< HEAD
   const eventDuration = getLengthTrip(dateFrom, dateTo);
   const startDate = dateFrom !== null ? adaptPointDueDate(dateFrom) : '';
   const endDate = dateTo !== null ? adaptPointDueDate(dateTo) : '';
+=======
+  const eventDuration = getDuration(dateFrom, dateTo);
+  const startDate = dateFrom !== null ? humanizePointDueDate(dateFrom) : '';
+  const endDate = dateTo !== null ? humanizePointDueDate(dateTo) : '';
+>>>>>>> master
   const destinationData = destinations.find((item) => item.id === destination);
   return (
     `<li class="trip-events__item">

@@ -2,8 +2,7 @@ import Observable from '../framework/observable.js';
 
 export default class OffersModel extends Observable{
   #offers = [];
-  #ApiServOffers = null;
-  #isSucceedLoading = false;
+  #offersApiService = null;
 
   constructor(offersApiService) {
     super();
@@ -12,19 +11,16 @@ export default class OffersModel extends Observable{
 
   init = async () => {
     try {
-      this.#isSucceedLoading = true;
-      this.#offers = await this.#ApiServOffers.offers;
+      this.#offers = await this.#offersApiService.offers;
     } catch(err) {
       this.#isSucceedLoading = false;
       this.#offers = [];
+      this.#isSuccessfulLoading = false;
     }
   };
 
   get offers() {
     return this.#offers;
   }
-
-  get isSucceedLoading() {
-    return this.#isSucceedLoading;
-  }
 }
+

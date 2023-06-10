@@ -1,6 +1,6 @@
 {
   "name": "big-trip",
-  "version": "19.0.0",
+  "version": "16.0.0",
   "private": true,
   "description": "Проект «Большое путешествие» от HTML Academy",
   "browserslist": [
@@ -12,30 +12,17 @@
   ],
   "scripts": {
     "lint": "eslint src/",
-    "test": "npm run eslint",
-    "build": "webpack --mode production",
-    "start": "webpack serve --mode development --open"
+    "build": "webpack"
   },
   "devDependencies": {
     "eslint": "8.28.0",
-    "eslint-config-htmlacademy": "8.0.0",
-    "webpack": "^5.86.0",
-    "webpack-cli": "4.10.0",
-    "copy-webpack-plugin": "11.0.0",
-    "build": "webpack --mode production",
-    "webpack-dev-server": "4.11.1",
-    "@babel/core": "7.20.5",
-    "@babel/preset-env": "7.20.2",
-    "babel-loader": "8.2.3",
-    "css-loader": "6.5.1",
-    "style-loader": "3.3.1"
-  },
-  "dependencies": {
-    "dayjs": "1.10.7",
-    "flatpickr": "4.6.9",
-    "he": "1.2.0"
+    "eslint-config-htmlacademy": "8.0.0"
   },
   "engines": {
     "node": "18"
+  },
+  "dependencies": {
+    "webpack": "^5.75.0",
+    "webpack-cli": "5.0.0"
   }
 }

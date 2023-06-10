@@ -49,7 +49,6 @@ const newPointButtonPresenter = new NewPointButtonPresenter({
   offersModel: offersModel,
   boardPresenter: boardPresenter
 });
-
 newPointButtonPresenter.init();
 
 offersModel.init().finally(() => {

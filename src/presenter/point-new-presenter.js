@@ -31,7 +31,11 @@ export default class PointNewPresenter {
     this.#destinations = [...this.#modelDestinations.destinations];
     this.#offers = [...this.#modelOffers.offers];
 
+<<<<<<< HEAD
     this.#componentCreatingPoint = new PointView({
+=======
+    this.#creatingPointComponent = new PointView({
+>>>>>>> master
       destinations: this.#destinations,
       offers: this.#offers,
       isNewPoint: true
@@ -95,3 +99,4 @@ export default class PointNewPresenter {
     );
   };
 }
+

@@ -4,14 +4,32 @@ import { filter } from '../utils/filter.js';
 import { FilterType, UpdateType } from '../const.js';
 
 export default class FilterPresenter {
+<<<<<<< HEAD
   #containerFilter = null;
+=======
+  #filterContainer = null;
+
+  #filterModel = null;
+  #pointsModel = null;
+  #offersModel = null;
+  #destinationsModel = null;
+>>>>>>> master
 
   #modelFilter = null;
   #modelPoints = null;
   #modelOffers = null;
   #modelDestinations = null;
 
+<<<<<<< HEAD
   #componentFilter = null;
+=======
+  constructor({filterContainer, pointsModel, destinationsModel, offersModel, filterModel}) {
+    this.#filterContainer = filterContainer;
+    this.#filterModel = filterModel;
+    this.#pointsModel = pointsModel;
+    this.#destinationsModel = destinationsModel;
+    this.#offersModel = offersModel;
+>>>>>>> master
 
   constructor({filterContainer, pointsModel, destinationsModel, offersModel, filterModel}) {
     this.#containerFilter = filterContainer;
@@ -63,9 +81,15 @@ export default class FilterPresenter {
   };
 
   #handleModelEvent = () => {
+<<<<<<< HEAD
     if (this.#modelOffers.offers.length === 0 || this.#modelOffers.isSuccessfulLoading === false ||
       this.#modelDestinations.destinations.length === 0 || this.#modelDestinations.isSuccessfulLoading === false ||
       this.#modelPoints.isSuccessfulLoading === false) {
+=======
+    if (this.#offersModel.offers.length === 0 || this.#offersModel.isSuccessfulLoading === false ||
+      this.#destinationsModel.destinations.length === 0 || this.#destinationsModel.isSuccessfulLoading === false ||
+      this.#pointsModel.isSuccessfulLoading === false) {
+>>>>>>> master
       return;
     }
     this.init();
