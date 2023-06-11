@@ -1,7 +1,7 @@
 # Проект «Большое путешествие»
 
-* Студент: [Елена Латынцева](https://up.htmlacademy.ru/univer-js2/2/user/2178703).
-* Наставник: [Сергей Глазков](https://htmlacademy.ru/profile/id1194253).
+* Студент: [Алина Сабитова](https://htmlacademy.ru/profile/id2221191).
+* Наставник: [Евгений Лепёшкин](https://htmlacademy.ru/profile/spearance).
 
 ---
 
