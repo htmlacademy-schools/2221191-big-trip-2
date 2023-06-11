@@ -3,8 +3,8 @@ import TripInfoView from '../view/trip-info-view.js';
 
 export default class TripInfoPresenter {
   #points = null;
-  #tripInfoComponent = null;
-  #tripInfoContainer = null;
+  #tripInformationComponent = null;
+  #tripInformationContainer = null;
   #destinationsModel = null;
   #offersModel = null;
 
@@ -12,7 +12,7 @@ export default class TripInfoPresenter {
   #offers = null;
 
   constructor(tripInfoContainer, destinationsModel, offersModel) {
-    this.#tripInfoContainer = tripInfoContainer;
+    this.#tripInformationContainer = tripInfoContainer;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
   }
@@ -22,13 +22,13 @@ export default class TripInfoPresenter {
     this.#destinations = [...this.#destinationsModel.destinations];
     this.#offers = [...this.#offersModel.offers];
 
-    this.#tripInfoComponent = new TripInfoView(this.#points, this.#destinations, this.#offers);
+    this.#tripInformationComponent = new TripInfoView(this.#points, this.#destinations, this.#offers);
 
-    render(this.#tripInfoComponent, this.#tripInfoContainer);
+    render(this.#tripInformationComponent, this.#tripInformationContainer);
   };
 
   destroy = () => {
-    remove(this.#tripInfoComponent);
+    remove(this.#tripInformationComponent);
   };
 }
 
