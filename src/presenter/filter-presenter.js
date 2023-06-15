@@ -5,6 +5,7 @@ import { FilterType, UpdateType } from '../const.js';
 
 export default class FilterPresenter {
   #filterContainer = null;
+
   #filterModel = null;
   #pointsModel = null;
   #offersModel = null;
@@ -14,14 +15,13 @@ export default class FilterPresenter {
 
   constructor({filterContainer, pointsModel, destinationsModel, offersModel, filterModel}) {
     this.#filterContainer = filterContainer;
-
     this.#filterModel = filterModel;
     this.#pointsModel = pointsModel;
     this.#destinationsModel = destinationsModel;
     this.#offersModel = offersModel;
 
-    this.#pointsModel.addObserver(this.#modelEventHandler);
-    this.#filterModel.addObserver(this.#modelEventHandler);
+    this.#pointsModel.addObserver(this.#handleModelEvent);
+    this.#filterModel.addObserver(this.#handleModelEvent);
   }
 
   get filters() {
@@ -51,7 +51,7 @@ export default class FilterPresenter {
     const prevFilterComponent = this.#filterComponent;
 
     this.#filterComponent = new FilterView(filters, this.#filterModel.filter);
-    this.#filterComponent.setFilterTypeChangeHandler(this.#filterTypeChangeHandler);
+    this.#filterComponent.setFilterTypeChangeHandler(this.#handleFilterTypeChange);
 
     if (prevFilterComponent === null) {
       render(this.#filterComponent, this.#filterContainer);
@@ -62,7 +62,7 @@ export default class FilterPresenter {
     remove(prevFilterComponent);
   };
 
-  #modelEventHandler = () => {
+  #handleModelEvent = () => {
     if (this.#offersModel.offers.length === 0 || this.#offersModel.isSuccessfulLoading === false ||
       this.#destinationsModel.destinations.length === 0 || this.#destinationsModel.isSuccessfulLoading === false ||
       this.#pointsModel.isSuccessfulLoading === false) {
@@ -71,7 +71,7 @@ export default class FilterPresenter {
     this.init();
   };
 
-  #filterTypeChangeHandler = (filterType) => {
+  #handleFilterTypeChange = (filterType) => {
     if (this.#filterModel.filter === filterType) {
       return;
     }

@@ -242,5 +242,3 @@ export default class BoardPresenter {
     this.#renderBoard();
   };
 }
-
-

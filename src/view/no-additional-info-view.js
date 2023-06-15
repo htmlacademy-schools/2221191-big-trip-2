@@ -10,4 +10,3 @@ export default class NoAdditionalInfoView extends AbstractView {
     return createNoAdditionalInfoTemplate();
   }
 }
-
