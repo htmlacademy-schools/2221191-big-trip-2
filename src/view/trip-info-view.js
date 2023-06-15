@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { convertPointDueDate } from '../utils/date-point.js';
+import {humanizePointDueDate } from '../utils/date-point.js';
 
 const renderRouteTrip = (points, destinations) => {
   if (points.length === 0) {
@@ -25,8 +25,8 @@ const renderDatesTrip = (points) => {
   if (points.length === 0) {
     return '';
   }
-  const startDate = points[0].dateFrom !== null ? convertPointDueDate(points[0].dateFrom) : '';
-  const endDate = points[points.length - 1].dateTo !== null ? convertPointDueDate(points[points.length - 1].dateTo) : '';
+  const startDate = points[0].dateFrom !== null ? humanizePointDueDate(points[0].dateFrom) : '';
+  const endDate = points[points.length - 1].dateTo !== null ? humanizePointDueDate(points[points.length - 1].dateTo) : '';
   return `${startDate}&nbsp;&mdash;&nbsp;${endDate}`;
 };
 
@@ -85,4 +85,3 @@ export default class TripInfoView extends AbstractView {
     return createTripInfoTemplate(this.#points, this.#destinations, this.#offers);
   }
 }
-

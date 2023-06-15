@@ -1,44 +1,44 @@
 import dayjs from 'dayjs';
 const HOUR_MINUTES_COUNT = 60;
-const FULL_DAY_MINUTES_COUNT = 1440;
-const DATE_TYPE = 'YYYY-MM-DD';
-const DATE_TIME_TYPE = 'DD/MM/YY HH:mm';
-const TIME_TYPE = 'HH:mm';
+const TOTAL_DAY_MINUTES_COUNT = 1440;
+const DATE_FORMAT = 'YYYY-MM-DD';
+const DATE_TIME_FORMAT = 'DD/MM/YY HH:mm';
+const TIME_FORMAT = 'HH:mm';
 
-const convertPointDueDate = (date) => dayjs(date).format('DD MMM');
+const humanizePointDueDate = (date) => dayjs(date).format('DD MMM');
 
-const getDaysResult = (days) => days <= 0 ? '' : `${`${days}`.padStart(2, '0')}D`;
+const getDaysOutput = (days) => days <= 0 ? '' : `${`${days}`.padStart(2, '0')}D`;
 
-const getHoursResult = (days, restHours) => (days <= 0 && restHours <= 0) ? '' : `${`${restHours}`.padStart(2, '0')}H`;
+const getHoursOutput = (days, restHours) => (days <= 0 && restHours <= 0) ? '' : `${`${restHours}`.padStart(2, '0')}H`;
 
-const getMinutesResult = (restMinutes) => `${`${restMinutes}`.padStart(2, '0')}M`;
+const getMinutesOutput = (restMinutes) => `${`${restMinutes}`.padStart(2, '0')}M`;
 
-const getLenght = (dateFrom, dateTo) => {
-  const begining = dayjs(dateFrom);
-  const ending = dayjs(dateTo);
-  const difference = ending.diff(begining, 'minute');
+const getDuration = (dateFrom, dateTo) => {
+  const start = dayjs(dateFrom);
+  const end = dayjs(dateTo);
+  const difference = end.diff(start, 'minute');
 
-  const days = Math.trunc(difference / FULL_DAY_MINUTES_COUNT);
-  const hours = Math.trunc((difference - days * FULL_DAY_MINUTES_COUNT) / HOUR_MINUTES_COUNT);
-  const minutes = difference - (days * FULL_DAY_MINUTES_COUNT + hours * HOUR_MINUTES_COUNT);
+  const days = Math.trunc(difference / TOTAL_DAY_MINUTES_COUNT);
+  const restHours = Math.trunc((difference - days * TOTAL_DAY_MINUTES_COUNT) / HOUR_MINUTES_COUNT);
+  const restMinutes = difference - (days * TOTAL_DAY_MINUTES_COUNT + restHours * HOUR_MINUTES_COUNT);
 
-  const daysResult = getDaysResult(days);
-  const hoursResult = getHoursResult(days, hours);
-  const minutesResult = getMinutesResult(minutes);
+  const daysOutput = getDaysOutput(days);
+  const hoursOutput = getHoursOutput(days, restHours);
+  const minutesOutput = getMinutesOutput(restMinutes);
 
-  return `${daysResult} ${hoursResult} ${minutesResult}`;
+  return `${daysOutput} ${hoursOutput} ${minutesOutput}`;
 };
 
-const getDate = (date) => dayjs(date).format(DATE_TYPE);
+const getDate = (date) => dayjs(date).format(DATE_FORMAT);
 
-const getTime = (date) => dayjs(date).format(TIME_TYPE);
+const getTime = (date) => dayjs(date).format(TIME_FORMAT);
 
-const getDateTime = (date) => dayjs(date).format(DATE_TIME_TYPE);
+const getDateTime = (date) => dayjs(date).format(DATE_TIME_FORMAT);
 
-const isPastPointDate = (dateTo) => dayjs().diff(dateTo, 'minute') > 0;
+const isPointDatePast = (dateTo) => dayjs().diff(dateTo, 'minute') > 0;
 
-const isFuturePointDate = (dateFrom) => dayjs().diff(dateFrom, 'minute') <= 0;
+const isPointDateFuture = (dateFrom) => dayjs().diff(dateFrom, 'minute') <= 0;
 
-const isFuturePastPointDate = (dateFrom, dateTo) => dayjs().diff(dateFrom, 'minute') > 0 && dayjs().diff(dateTo, 'minute') < 0;
+const isPointDateFuturePast = (dateFrom, dateTo) => dayjs().diff(dateFrom, 'minute') > 0 && dayjs().diff(dateTo, 'minute') < 0;
 
-export { convertPointDueDate, getLenght, getDate, getDateTime, getTime, isPastPointDate, isFuturePointDate, isFuturePastPointDate };
+export { humanizePointDueDate, getDuration, getDate, getDateTime, getTime, isPointDatePast, isPointDateFuture, isPointDateFuturePast };
