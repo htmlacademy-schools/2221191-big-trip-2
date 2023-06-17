@@ -9,7 +9,7 @@ import PointPresenter from './point-presenter.js';
 import PointNewPresenter from './point-new-presenter.js';
 import { sorting } from '../utils/sorting.js';
 import { filter } from '../utils/filter.js';
-import { UpdateType, UserAction, SortType, FilterType, TimeLimit } from '../const.js';
+import { UpdateType, UserAction, SortType, FilterType, TimeLimit } from '../utils/common.js';
 import TripInfoPresenter from './trip-info-presenter.js';
 
 export default class BoardPresenter {

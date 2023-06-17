@@ -72,6 +72,7 @@ const TimeLimit = {
   UPPER_LIMIT: 1000,
 };
 
+const isEscapeOn = (evt) => evt.key === 'Escape' || evt.key === 'Esc';
 
 export { UserAction, UpdateType, FilterType, SortType, SortTypeDescription, PointType, PointTypeDescription,
-  ApiServiceResponseMethod, AUTHORIZATION, END_POINT, TimeLimit };
+  ApiServiceResponseMethod, AUTHORIZATION, END_POINT, TimeLimit, isEscapeOn };

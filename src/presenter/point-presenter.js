@@ -1,7 +1,7 @@
 import { render, replace, remove } from '../framework/render.js';
 import PreviewPointView from '../view/preview-point-view.js';
 import PointView from '../view/point-view.js';
-import { UserAction, UpdateType } from '../const.js';
+import { UserAction, UpdateType, isEscapeOn } from '../utils/common.js';
 
 const Mode = {
   PREVIEW: 'preview',
@@ -135,7 +135,7 @@ export default class PointPresenter {
   };
 
   #escKeyDownHandler = (evt) => {
-    if (evt.key === 'Escape' || evt.key === 'Esc') {
+    if (isEscapeOn(evt)) {
       evt.preventDefault();
       this.resetView();
     }

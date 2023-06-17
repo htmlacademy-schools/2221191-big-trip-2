@@ -1,4 +1,4 @@
-import { FilterType } from '../const.js';
+import { FilterType } from './common.js';
 import { isPointDateFuture, isPointDatePast, isPointDateFuturePast } from './date-point.js';
 
 const filter = {

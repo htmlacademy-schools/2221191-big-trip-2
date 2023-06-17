@@ -1,5 +1,5 @@
 import ApiService from '../framework/api-service.js';
-import { ApiServiceResponseMethod } from '../const.js';
+import { ApiServiceResponseMethod } from '../utils/common.js';
 
 export default class PointsApiService extends ApiService {
   get points() {
@@ -43,6 +43,10 @@ export default class PointsApiService extends ApiService {
   };
 
   #adaptToServer = (point) => {
+    if (point.basePrice === 0) {
+      throw new Error ('Can not adapt to server');
+    }
+
     const adaptedPoint = {...point,
       'base_price': point.basePrice,
       'date_from': point.dateFrom instanceof Date ? point.dateFrom.toISOString() : null,

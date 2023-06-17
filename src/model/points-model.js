@@ -1,5 +1,5 @@
 import Observable from '../framework/observable.js';
-import { UpdateType } from '../const.js';
+import { UpdateType } from '../utils/common.js';
 
 export default class PointsModel extends Observable{
   #points = [];
@@ -20,7 +20,6 @@ export default class PointsModel extends Observable{
       this.#points = [];
       this.#isSuccessfulLoading = false;
     }
-
     this._notify(UpdateType.INIT);
   };
 
@@ -57,7 +56,7 @@ export default class PointsModel extends Observable{
     try {
       const response = await this.#pointsApiService.addPoint(update);
       const newPoint = this.#adaptToClient(response);
-      this.#points.unshift(newPoint);
+      this.#points = [newPoint, ...this.#points];
       this._notify(updateType, newPoint);
     } catch(err) {
       throw new Error('Can\'t add point');
