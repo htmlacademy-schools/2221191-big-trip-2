@@ -10,7 +10,7 @@ import OffersModel from './model/offers-model.js';
 import PointsApiService from './api-service/points-api-service.js';
 import DestinationsApiService from './api-service/destinations-api-service.js';
 import OffersApiService from './api-service/offers-api-service.js';
-import { END_POINT, AUTHORIZATION } from './const.js';
+import { END_POINT, AUTHORIZATION } from './utils/common.js';
 
 const siteHeaderElement = document.querySelector('.trip-main');
 const siteMainElement = document.querySelector('.page-main');

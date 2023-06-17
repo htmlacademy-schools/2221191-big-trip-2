@@ -1,5 +1,5 @@
 import AbstractView from '../framework/view/abstract-view.js';
-import { SortType, SortTypeDescription } from '../const.js';
+import { SortType, SortTypeDescription } from '../utils/common.js';
 
 const DISABLED_SORT_TYPES = [SortType.EVENT, SortType.OFFER];
 

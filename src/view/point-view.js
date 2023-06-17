@@ -1,6 +1,6 @@
 import AbstractStatefulView from '../framework/view/abstract-stateful-view.js';
 import { getDateTime } from '../utils/date-point.js';
-import { PointType, PointTypeDescription } from '../const.js';
+import { PointType, PointTypeDescription } from '../utils/common.js';
 import dayjs from 'dayjs';
 import flatpickr from 'flatpickr';
 import he from 'he';
@@ -147,6 +147,10 @@ export default class PointView extends AbstractStatefulView {
     this._restoreHandlers();
   }
 
+  get template () {
+    return createEditingPointTemplate(this._state, this.#destinations, this.#offers, this.#isNewPoint);
+  }
+
   removeElement = () => {
     super.removeElement();
 
@@ -159,10 +163,6 @@ export default class PointView extends AbstractStatefulView {
       this.#datepickerTo = null;
     }
   };
-
-  get template () {
-    return createEditingPointTemplate(this._state, this.#destinations, this.#offers, this.#isNewPoint);
-  }
 
   setPreviewClickHandler = (callback) => {
     this._callback.previewClick = callback;
